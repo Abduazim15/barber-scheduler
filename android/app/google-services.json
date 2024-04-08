@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1074360819446",
+    "project_id": "barber-scheduler-3fd41",
+    "storage_bucket": "barber-scheduler-3fd41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1074360819446:android:237663516845319ee816d7",
+        "android_client_info": {
+          "package_name": "com.example.barber"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7a2m2kQhE6Gk3X7qouqwBMrAZ8mlw1Mc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

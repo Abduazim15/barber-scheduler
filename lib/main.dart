@@ -7,6 +7,8 @@ import 'package:barber/presentation/screens/register_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 
 import 'bloc/auth_bloc.dart';
 import 'firebase_options.dart';
@@ -16,16 +18,15 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Hive.initFlutter();
+  await Hive.openBox('auth');
   runApp(MyApp());
 }
-/*
-android   1:1074360819446:android:237663516845319ee816d7
-ios       1:1074360819446:ios:65f39d6be4ce34dfe816d7
-*/
+
 class MyApp extends StatelessWidget {
   MyApp({super.key});
   FirebaseService service = FirebaseService();
-
+  var box = Hive.box('auth');
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -35,13 +36,13 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
         ),
-        home: const LoginOrRegister(),
+        home: box.containsKey('name') ? const HomePage(): const LoginOrRegister(),
         routes: {
-          '/loginOrRegister': (context) => LoginOrRegister(),
-          '/login': (context) => LoginPage(),
-          '/register': (context) => RegisterPage(),
-          '/information': (context) => InformationPage(),
-          '/home': (context) => HomePage(),
+          '/loginOrRegister': (context) => const LoginOrRegister(),
+          '/login': (context) => const LoginPage(),
+          '/register': (context) => const RegisterPage(),
+          '/information': (context) => const InformationPage(),
+          '/home': (context) => const HomePage(),
         },
       ),
     );

@@ -9,3 +9,9 @@ class AddUser extends AuthEvent {
 
   AddUser(this.name, this.phone);
 }
+class CheckUser extends AuthEvent {
+  final String name;
+  final String phone;
+
+  CheckUser(this.name, this.phone);
+}

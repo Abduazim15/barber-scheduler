@@ -1,7 +1,5 @@
 import 'package:barber/bloc/auth_bloc.dart';
-import 'package:barber/firebase_db_service.dart';
 import 'package:barber/models/user_model.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,14 +30,15 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if(state is AuthSuccess) {
-            Navigator.pushNamed(context, '/home');
+            Navigator.pushNamedAndRemoveUntil(
+                context, '/home', (route) => false);
           }
           else if (state is AuthError){
             switch(state.errorCode){
               case ErrorCodes.INPUT_LENGTH : {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text('Fields must not be less than 4 characters'),
+                    content: Text('Please check your login or password again!'),
                   ),
                 );
               }
@@ -161,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                   GestureDetector(
                     onTap: () {
                       UserModel model = UserModel(name: name, phone: phone);
-                      context.read<AuthBloc>().add(AddUser(name, phone));
+                      context.read<AuthBloc>().add(CheckUser(name, phone));
 
                       // Navigator.pushNamedAndRemoveUntil(
                       //     context, '/home', (route) => false);
